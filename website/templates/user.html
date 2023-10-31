@@ -1,0 +1,13 @@
+{% extends "base.html" %} {% block title %}User Home{% endblock %} {% block content
+%}
+    <br><br>
+
+    <h3> Welcome to the app, {{ user_data.username }}! </h3>
+    {% for class in cal[today] %}
+        {{class}} <br>
+    {% endfor %}
+
+    <br><br>
+
+
+{% endblock %}
