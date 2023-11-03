@@ -103,7 +103,14 @@
 
 
   {% if user.is_authenticated %}
-  <div id="footer">Footer - Just scroll...</div>
+    <div id="footer">
+      <div id="footer_button">
+        <a id="footer_button_link" href="/user/"> List </a>
+      </div>
+      <div id="footer_button">
+        <a id="footer_button_link" href="/user/map"> Map </a>
+      </div>
+    </div>
   {% endif %} 
 
 

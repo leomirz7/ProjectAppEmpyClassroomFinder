@@ -28,7 +28,18 @@
         font-family: sans-serif;
         font-weight: bold;
         text-shadow: 0 1px 0 #84BAFF;
-        box-shadow: 0 0 15px #00214B
+        box-shadow: 0 0 15px #00214B;
+      }
+      #footer_button {
+        width: 50%;
+        float: left;
+      }
+      #footer_button_link {
+        display: block;
+        height: 100%;
+        width: 100%;
+        text-decoration: none;
+        color: #000000;
       }
       #map-container {
         width: 100%;
@@ -545,7 +556,7 @@
           ,{"title":"edificio Zeta","address1":"Via Torino","address2":"155, 30172 Venezia VE, Italy","coords":{"lat":45.47860446275129,"lng":12.25596107578409},"placeId":"ChIJd8sEML61fkcRVYkypTUpyaQ"}
         
         ],
-        "mapOptions": {"center":{"lat":38.0,"lng":-100.0},"fullscreenControl":true,"mapTypeControl":true,"streetViewControl":false,"zoom":4,"zoomControl":true,"maxZoom":17,"mapId":""},
+        "mapOptions": {"center":{"lat":45.47885712419216,"lng":12.25533016940596},"fullscreenControl":true,"mapTypeControl":true,"streetViewControl":false,"zoom":13,"zoomControl":true,"maxZoom":20,"mapId":""},
         "mapsApiKey": "AIzaSyBbfyIpvNetPbX4UGtv6ddVjprg4cMA9vo",
         "capabilities": {"input":true,"autocomplete":true,"directions":false,"distanceMatrix":true,"details":false,"actions":true}
       };
@@ -611,7 +622,14 @@
     {% endraw %}
 
     {% if user.is_authenticated %}
-    <div id="footer">Footer - Just scroll...</div>
+    <div id="footer">
+      <div id="footer_button">
+        <a id="footer_button_link" href="/user/"> List </a>
+      </div>
+      <div id="footer_button">
+        <a id="footer_button_link" href="/user/map"> Map </a>
+      </div>
+    </div>
     {% endif %}  
   </body>
 </html>
