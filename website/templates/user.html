@@ -1,10 +1,12 @@
 {% extends "base.html" %} {% block title %}User Home{% endblock %} {% block content
 %}
-    <br><br>
+    <br><br>    
+
+    <a href="/user/map"> mappa</a>
 
     <h3> Welcome to the app, {{ user_data.username }}! </h3>
-    {% for class in cal[today] %}
-        {{class}} <br>
+    {% for a, s, e  in cal %}
+        {{a}} {{s}} {{e}}<br>
     {% endfor %}
 
     <br><br>
