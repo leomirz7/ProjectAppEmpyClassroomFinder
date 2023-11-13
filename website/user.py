@@ -23,14 +23,16 @@ day = today.day
 date_format = "%Y-%m-%d"
 todayString = today.strftime(date_format)
 
+""" todayString = "2023-11-03" """
+
 print(todayString)
 
 @user.route('/')
-#@login_required
+@login_required
 def private():
-    """ user = User.query.get(int(current_user.id))
+    user = User.query.get(int(current_user.id))
     
-    db.session.commit() """
+    db.session.commit()
 
     with open(os.path.join("/home/mirza/ProjectAppEmpyClassroomFinder/calendar.json"), "r") as read_file:
         calendar = json.load(read_file)
@@ -44,6 +46,9 @@ def private():
     aule_oggi = []
     now = datetime.datetime.now()
         
+    if not calendar.get(todayString):
+        return render_template('user.html', user=current_user, user_data=user, cal=aule_oggi, today=todayString)
+
     for a in calendar[todayString]:
         occupata = False
         for i,f in calendar[todayString][a]:

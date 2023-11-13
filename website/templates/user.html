@@ -1,13 +1,20 @@
 {% extends "base.html" %} {% block title %}User Home{% endblock %} {% block content
 %}
-    <br><br>    
-
-    <h3> Welcome to the app, {{ user_data.username }}! </h3>
-    {% for a, s, e  in cal %}
-        {{a}} {{s}} {{e}}<br>
-    {% endfor %}
-
-    <br><br>
+    {% if cal|length > 0 %}
+        {% for a, s, e  in cal %}
+            
+            <div id="room_el">
+                <div id="room_name">
+                    {{a}} - {{e}}
+                </div>
+                <div id="room_info">
+                    {{s}}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p> non ci sono aule libere disponibili</p>
+    {% endif %}
 
 
 {% endblock %}

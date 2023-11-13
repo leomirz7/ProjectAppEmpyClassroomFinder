@@ -1,119 +1,200 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-    <link rel="stylesheet" type="text/css" href= "{{url_for('static',filename='style.css') }}"  />
+        <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous"
+        />
+        <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        crossorigin="anonymous"
+        />
 
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      crossorigin="anonymous"
-    />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,200" />
+        <link rel="stylesheet" type="text/css" href= "{{url_for('static',filename='style.css') }}"  />
 
+        <link rel="icon" type="image/x-icon" href="{{url_for('static',filename='icon.png') }}">
+        
+        <script
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"
+        ></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"
+        ></script>
+        <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"
+        ></script>
+        <script src="extensions/resizable/bootstrap-table-resizable.js"></script>
+        <script>
+            function w3_open() {
+              document.getElementById("mySidebar").style.left = "0vw";
+            
+              document.getElementById("layer").style.visibility = "visible";
+              document.getElementById("layer").style.width = "40vw";
+              document.getElementById("layer").style.backgroundColor = "rgba(0,0,0,0.5)";
+              document.getElementById("layer").style.backdropFilter = "blur(1.8px)";
+              document.getElementById("layer").style.webkitBackdropFilter = "blur(1.8px)";
+            }
+            
+            function w3_close() {
+              document.getElementById("mySidebar").style.left = "-60vw";
+              
+              document.getElementById("layer").style.width = "100vw";
+              document.getElementById("layer").style.backgroundColor = "rgba(0,0,0,0)";
+              document.getElementById("layer").style.backdropFilter = "blur(0px)";
+              document.getElementById("layer").style.webkitBackdropFilter = "blur(0px)";
 
-    <link rel="icon" type="image/x-icon" href="{{url_for('static',filename='icon.png') }}">
-    
-  
+              document.getElementById("layer").style.visibility = "hidden";
+              
+            }
+        </script>
 
-    <title>{% block title %}Home{% endblock %}</title>
-  </head>
-  <body>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet"> 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbar"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbar">
-        <div class="navbar-nav">
-          {% if user.is_authenticated %}
-          <a class="nav-item nav-link" id="home" href="/">Home</a>
-          <a class="nav-item nav-link" id="logout" href="/auth/logout">Logout</a>
-          {% else %}
-          <a class="nav-item nav-link" id="login" href="/auth/login">Login</a>
-          <a class="nav-item nav-link" id="register" href="/auth/register">Register</a>
-          {% endif %}
+        <title>{% block title %}Home{% endblock %}</title>
+    </head>
+    <body>
+
+    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbar"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="page_title">
+            AVAILABLE ROOMS
         </div>
-      </div>
-    </nav>
+        <div class="collapse navbar-collapse" id="navbar">
+            
+            <div class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" id="home" href="/">Home</a>
+                    <a class="nav-item nav-link" id="logout" href="/auth/logout">Logout</a>
+                {% else %}
+                    <a class="nav-item nav-link" id="login" href="/auth/login">Login</a>
+                    <a class="nav-item nav-link" id="register" href="/auth/register">Register</a>
+                {% endif %}
+            </div>
+            
+        </div>
+    </nav> -->
+    
+    
+    {% if user.is_authenticated %}
+    <div id="footer">
+        
+        <div id="footer_button">
+            <a href="/user/" id="footer_button_link">
+                <span class="material-symbols-outlined">
+                    list
+                </span>
+                <span id="footer_label_link" href="/user/"> List </span>
+            </a>
+        </div>
+        <div id="footer_button">
+            <a href="/user/map" id="footer_button_link">
+                <span class="material-symbols-outlined">
+                    pin_drop
+                </span>
+                <span id="footer_label_link" href="/user/map"> Map </span>
+            </a>
+        </div>
+        
+    </div>
+    {% endif %} 
+
+    
+
+    <div id="header">
+        <div class="w3-sidebar w3-bar-block w3-border-right" id="mySidebar">
+            
+            <!-- <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button> -->
+            
+            <div id="logo">
+                EMPY
+            </div>
+
+
+            {% if user.is_authenticated %}
+                <a class="nav-item nav-link" id="home" href="/user/">Home</a>
+                <a class="nav-item nav-link" id="logout" href="/auth/logout">Logout</a>
+            {% else %}
+                <a class="nav-item nav-link" id="login" href="/auth/login">Login</a>
+                <a class="nav-item nav-link" id="register" href="/auth/register">Register</a>
+            {% endif %}
+            
+        </div>
+        <button id="hamburger_menu" class="w3-button w3 w3-xlarge" onclick="w3_open()">☰</button>
+        <div id="page_title">
+            {% if user.is_authenticated %}
+                AVAILABLE ROOMS
+            {% else %}
+                EMPY
+            {% endif %}
+        </div>
+        <div id="layer" onclick="w3_close()">
+        
+        </div>
+    </div>
+
+    
+
 
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %} {% for category, message in messages %} {% if category ==
     'error' %}
-    <div class="alert alert-danger alter-dismissable fade show" role="alert">
-      {{ message }}
-      <button type="button" class="close" data-dismiss="alert">
-        <div aria-hidden="true">&times;</div>
-      </button>
-    </div>
+        <div class="alert alert-danger alter-dismissable fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert">
+            <div aria-hidden="true">&times;</div>
+            </button>
+        </div>
     {% else %}
-    <div class="alert alert-success alter-dismissable fade show" role="alert">
-      {{ message }}
-      <button type="button" class="close" data-dismiss="alert">
-        <div aria-hidden="true">&times;</div>
-      </button>
-    </div>
+        <div class="alert alert-success alter-dismissable fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert">
+            <div aria-hidden="true">&times;</div>
+            </button>
+        </div>
     {% endif %} {% endfor %} {% endif %} {% endwith %}
 
     <div class="container">{% block content %} {% endblock %}</div>
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
-    <script src="extensions/resizable/bootstrap-table-resizable.js"></script>
-
-<!--{% block javascript %}-->
-<!--    <script type="text/javascript">-->
-<!--      function deleteNote(noteId) {-->
-<!--  fetch("/delete-note", {-->
-<!--    method: "POST",-->
-<!--    body: JSON.stringify({ noteId: noteId }),-->
-<!--  }).then((_res) => {-->
-<!--    window.location.href = "/";-->
-<!--  });-->
-<!--  }-->
-<!--</script>-->
-<!--{% endblock %}-->
 
 
-  {% if user.is_authenticated %}
-    <div id="footer">
-      <div id="footer_button">
-        <a id="footer_button_link" href="/user/"> List </a>
-      </div>
-      <div id="footer_button">
-        <a id="footer_button_link" href="/user/map"> Map </a>
-      </div>
-    </div>
-  {% endif %} 
+    <!--{% block javascript %}-->
+    <!--    <script type="text/javascript">-->
+    <!--      function deleteNote(noteId) {-->
+    <!--  fetch("/delete-note", {-->
+    <!--    method: "POST",-->
+    <!--    body: JSON.stringify({ noteId: noteId }),-->
+    <!--  }).then((_res) => {-->
+    <!--    window.location.href = "/";-->
+    <!--  });-->
+    <!--  }-->
+    <!--</script>-->
+    <!--{% endblock %}-->
+
+        
+    
+
+    
 
 
 
-  </body>
+    </body>
 </html>

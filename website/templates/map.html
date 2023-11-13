@@ -8,39 +8,15 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/handlebars/4.7.7/handlebars.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #footer {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        height: 6%;
-        background: #0070FF;
-        line-height: 2;
-        text-align: center;
-        color: #042E64;
-        font-size: 30px;
-        font-family: sans-serif;
-        font-weight: bold;
-        text-shadow: 0 1px 0 #84BAFF;
-        box-shadow: 0 0 15px #00214B;
-      }
-      #footer_button {
-        width: 50%;
-        float: left;
-      }
-      #footer_button_link {
-        display: block;
-        height: 100%;
-        width: 100%;
-        text-decoration: none;
-        color: #000000;
-      }
+        html,
+        body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        
       #map-container {
         width: 100%;
         height: 94%;
@@ -232,6 +208,7 @@
         padding: 0;
       }
     </style>
+    
     <script>
       'use strict';
 
@@ -549,6 +526,7 @@
         };
       }
     </script>
+    <link rel="stylesheet" type="text/css" href= "{{url_for('static',filename='style.css') }}"  />
     <script>
       const CONFIGURATION = {
         "locations": [
@@ -587,6 +565,7 @@
         </li>
       {{/each}}
     </script>
+    
   </head>
   <body>
     <!-- {% extends "base.html" %} {% block title %}Map{% endblock %} {% block content
@@ -623,13 +602,25 @@
 
     {% if user.is_authenticated %}
     <div id="footer">
+        
       <div id="footer_button">
-        <a id="footer_button_link" href="/user/"> List </a>
+          <a href="/user/" id="footer_button_link">
+              <span class="material-symbols-outlined">
+                  list
+              </span>
+              <span id="footer_button_link" href="/user/"> List </span>
+          </a>
       </div>
       <div id="footer_button">
-        <a id="footer_button_link" href="/user/map"> Map </a>
+          <a href="/user/map" id="footer_button_link">
+              <span class="material-symbols-outlined">
+                  pin_drop
+              </span>
+              <span id="footer_button_link" href="/user/map"> Map </span>
+          </a>
       </div>
-    </div>
-    {% endif %}  
+      
+  </div>
+    {% endif %} 
   </body>
 </html>
