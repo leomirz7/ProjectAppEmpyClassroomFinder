@@ -56,7 +56,6 @@
 
 #footer_button {
     width: 50%;
-    color: white;
     display: flex;
     flex-direction: column;
 }
@@ -70,6 +69,11 @@
 }
 #footer_button_link:visited { 
     text-decoration: none;
+}
+
+#footer_label_link {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: block;
 }
 
 #map {
@@ -94,17 +98,25 @@
     border-bottom-style: solid;
     border-width: 1px;
     padding: 1vh;
+    min-height: 7.72vh;
+    position: relative;
 }
 #room_el:hover {
     background-color: rgb(184, 184, 184);
 }
 
 .container {
+    position: fixed;
+    overflow-y:scroll;
+	overflow-x:hidden;
+    height: 85vh;
+    top:7.5vh;
+    bottom:7.5vh;
     max-width: 100%;
     padding-left: 0;
     padding-right: 0;
-    padding-top: 6vh;
-    margin-bottom: 7.5vh;
+    /* padding-top: 7.5vh;
+    margin-bottom: 7.5vh; */
     margin-left: 0;
     margin-right: 0;
 }
@@ -128,6 +140,14 @@
     /* float: left; */
     background-color: #0070FF;
     color: white;
+    width: 6vh;
+    font-size:200%;
+    border: none;
+}
+#hamburger_menu:active {  
+    outline: none;
+    box-shadow: none;
+    background-color: #328bff;
 }
 
 #header {
@@ -136,6 +156,7 @@
     top: 0;
     width: 100%;
     background-color: #0070FF; 
+    height: 7.5vh;
 }
 
 #layer {
@@ -145,7 +166,7 @@
     right: 0;
     visibility: hidden;
     -webkit-backdrop-filter: blur(1.8px);
-    /* backdrop-filter: blur(1.8px); */
+    backdrop-filter: blur(1.8px);
     transition: 0.6s;
     position: absolute;
 }
@@ -155,10 +176,11 @@
     align-items:center;
     justify-content:center;
     font-size: 3vh;
-    padding: 1vh;
+    /* padding: 1vh; */
     border-bottom: #111;
     border-bottom-style:solid;
     border-width: 1px;
+    height: 7.5vh;
 }
 
 #mySidebar {
@@ -172,5 +194,32 @@
 
 .alert {
     position: fixed;
-    
+}
+
+#profile_content {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    align-items: center;
+}
+
+
+#profile_username, #profile_email {
+    font-size: 2em;
+    font-weight: 600;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding-top: 5vw;
+}
+
+#profile_email {
+    font-size: 1.3em;
+    font-weight: 400;
+    font-style: italic;
+}
+
+
+#profile_image {
+    font-size: 50vw;
+    top: 7.5vh;
+    padding-top: 10vw;
 }

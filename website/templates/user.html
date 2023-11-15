@@ -1,5 +1,19 @@
-{% extends "base.html" %} {% block title %}User Home{% endblock %} {% block content
-%}
+{% extends "base.html" %} 
+
+{% block header_title %}
+        
+    {{title}}
+    
+{% endblock %}
+
+
+{% block title %}
+
+    {{title}}
+
+{% endblock %} 
+{% block content %}
+
     {% if cal|length > 0 %}
         {% for a, s, e  in cal %}
             

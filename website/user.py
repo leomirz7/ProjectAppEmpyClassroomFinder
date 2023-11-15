@@ -25,29 +25,20 @@ todayString = today.strftime(date_format)
 
 """ todayString = "2023-11-03" """
 
-print(todayString)
+""" print(todayString) """
 
-@user.route('/')
-@login_required
-def private():
-    user = User.query.get(int(current_user.id))
-    
-    db.session.commit()
+with open(os.path.join("/home/mirza/ProjectAppEmpyClassroomFinder/calendar.json"), "r") as read_file:
+    calendar = json.load(read_file)
 
-    with open(os.path.join("/home/mirza/ProjectAppEmpyClassroomFinder/calendar.json"), "r") as read_file:
-        calendar = json.load(read_file)
+with open(os.path.join("/home/mirza/ProjectAppEmpyClassroomFinder/DB/aule.json"), "r") as read_file:
+    aule = json.load(read_file)
 
-    with open(os.path.join("/home/mirza/ProjectAppEmpyClassroomFinder/DB/aule.json"), "r") as read_file:
-        aule = json.load(read_file)
+with open(os.path.join("/home/mirza/ProjectAppEmpyClassroomFinder/DB/sedi.json"), "r") as read_file:
+    sedi = json.load(read_file)
 
-    with open(os.path.join("/home/mirza/ProjectAppEmpyClassroomFinder/DB/sedi.json"), "r") as read_file:
-        sedi = json.load(read_file)
-        
+def get_aule_oggi():
     aule_oggi = []
     now = datetime.datetime.now()
-        
-    if not calendar.get(todayString):
-        return render_template('user.html', user=current_user, user_data=user, cal=aule_oggi, today=todayString)
 
     for a in calendar[todayString]:
         occupata = False
@@ -62,7 +53,7 @@ def private():
         empty_sede = {}
 
         if not occupata:
-            print(a, calendar[todayString][a], '\n\n')  
+            """ print(a, calendar[todayString][a], '\n\n')   """
             for item in aule:
                 if item["AULA_ID"] == a:
                     empty_room = item  
@@ -74,16 +65,39 @@ def private():
             edificio = re.findall(r'\(.*?\)', empty_sede["NOME"])[0]
             
             aule_oggi.append((empty_room["NOME"], empty_sede["NOME"].replace(edificio, ""), edificio.replace("(","").replace(")",""))) 
-            
-             
+    
+    return aule_oggi
 
-    return render_template('user.html', user=current_user, user_data=user, cal=aule_oggi, today=todayString)
+
+@user.route('/')
+@login_required
+def private():
+    user = User.query.get(int(current_user.id))
+    db.session.commit()
+
+    aule_oggi = []
+    now = datetime.datetime.now()
+        
+    if not calendar.get(todayString):
+        return render_template('user.html', user=current_user, user_data=user, cal=aule_oggi, today=todayString)
+
+    return render_template('user.html', user=current_user, user_data=user, cal=get_aule_oggi(), today=todayString, title="AVAILABLE ROOMS")
+
 
 @user.route('/map')
-#@login_required
+@login_required
 def map():
-    """ user = User.query.get(int(current_user.id))
-    
-    db.session.commit() """
+    user = User.query.get(int(current_user.id))
+    db.session.commit()
 
-    return render_template('map.html',user=current_user)
+    return render_template('map2.html', user=current_user, title="MAP", cal=get_aule_oggi())
+
+
+@user.route('/profile')
+@login_required
+def profile():
+    user = User.query.get(int(current_user.id))
+    
+    db.session.commit()
+
+    return render_template('profile.html', user=current_user, title="PROFILE")

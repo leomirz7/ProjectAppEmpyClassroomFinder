@@ -59,7 +59,7 @@ def register():
     return render_template('register.html', user=current_user)
 
 
-@auth.route('/logout')
+@auth.route('/logout/')
 @login_required     # richiede autenticazione
 def logout():
     logout_user()   # chiamata a Flask - L
