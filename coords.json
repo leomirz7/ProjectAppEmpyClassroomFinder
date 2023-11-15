@@ -1,0 +1,20 @@
+[
+    {
+      "title": "edificio Delta",
+      "address1": "Via Torino",
+      "address2": "155, 30172 Venezia VE, Italy",
+      "coords": {
+        "lat": 45.47789406868193,
+        "lng": 12.25580353558198
+      }
+    },
+    {
+      "title": "edificio Zeta",
+      "address1": "Via Torino",
+      "address2": "155, 30172 Venezia VE, Italy",
+      "coords": {
+        "lat": 45.47860446275129,
+        "lng": 12.25596107578409
+      }
+    }
+]

@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block title %}Profile{% endblock %} 
+
+{% block header_title %}
+        
+    {{title}}
+    
+{% endblock %}
+
+
+{% block content %}
+        
+    <div id="profile_content">
+        <span id="profile_image" class="material-symbols-outlined">
+            account_circle
+        </span>
+        <span id="profile_username">{{ current_user.username }}</span>
+        <span id="profile_email">{{ current_user.email }}</span>
+    </div>
+    
+{% endblock %}
