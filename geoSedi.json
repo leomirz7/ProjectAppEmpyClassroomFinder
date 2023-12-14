@@ -1,0 +1,77 @@
+[
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Delta",
+        "id": "990025D"
+      },
+      "geometry": {
+        "coordinates": [
+          12.255973843213553,
+          45.47798302270519
+        ],
+        "type": "Point"
+      },
+      "id": 0
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Zeta",
+        "id": "990025Z"
+      },
+      "geometry": {
+        "coordinates": [
+          12.255822424048063,
+          45.478624134110134
+        ],
+        "type": "Point"
+      },
+      "id": 1
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Beta",
+        "id": "990025B"
+      },
+      "geometry": {
+        "coordinates": [
+          12.254648208870407,
+          45.47885882134352
+        ],
+        "type": "Point"
+      },
+      "id": 2
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Epsilon",
+        "id": "990025E"
+      },
+      "geometry": {
+        "coordinates": [
+          12.255156549894082,
+          45.47786400960118
+        ],
+        "type": "Point"
+      },
+      "id": 3
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Alfa",
+        "id": "990025A"
+      },
+      "geometry": {
+        "coordinates": [
+          12.254472129654289,
+          45.47824937517575
+        ],
+        "type": "Point"
+      },
+      "id": 4
+    }
+  ]

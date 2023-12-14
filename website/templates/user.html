@@ -1,34 +1,178 @@
 {% extends "base.html" %} 
 
 {% block header_title %}
-        
     {{title}}
-    
 {% endblock %}
 
 
 {% block title %}
-
     {{title}}
-
 {% endblock %} 
+
 {% block content %}
+    <meta id="my-data" data-name="{{live}}">
 
-    {% if cal|length > 0 %}
-        {% for a, s, e  in cal %}
+    <div id="data">
+        <div  id="date_picker_form">
+            <button onclick="byOneDay(-1)" name="previous" id="previous" > &lt; </button>
+            <input onchange="change()" type="datetime-local" name="date_time" value={{today}} id="datetime_picker">
+            <a id="live_button" onclick="goLive()">
+                    <span>Live</span>
+                    <span id="live-icon"></span>
+            </a>
+            <button onclick="byOneDay(1)" name="next" id="next"> &gt; </button>
+
+        </div>
+    </div>
+
+    <div id="lista">
+    </div>
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <script>
+
+        function goLive() {
+
+            const formatDate = (date) => {
+                return date.getFullYear() + "-" + (date.getMonth()+1).toString().padStart(2, '0') + "-" + date.getDate().toString().padStart(2, '0') + "T" + date.getHours().toString().padStart(2, '0') + ":" + date.getMinutes().toString().padStart(2, '0');
+            }
+
+            flag = "True"
+            changeLiveStyle(flag) 
+            let date = new Date();
+            date2 = formatDate(date)
+            document.getElementById("datetime_picker").value = date2.toString();
+            update_list(date2)
+          
+        }
+
+        window.onload = (event) => {
             
-            <div id="room_el">
-                <div id="room_name">
-                    {{a}} - {{e}}
-                </div>
-                <div id="room_info">
-                    {{s}}
-                </div>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p> non ci sono aule libere disponibili</p>
-    {% endif %}
+            update_list(document.getElementById("datetime_picker").value)
+            document.getElementById("map_icon").style.setProperty('font-variation-settings', `'FILL' 0, 'wght' 200, 'GRAD' -25, 'opsz' 20`);
+            document.getElementById("list_icon").style.setProperty('font-variation-settings', `'FILL' 1, 'wght' 200, 'GRAD' -25, 'opsz' 20`);
+        };
 
+        function update_list(date) {
+            document.getElementById("footer_map_button_link").href = "/user/map?date=" + date.toString() + "&flag=" + flag
+            console.log(flag)
+            if(flag == "False") {
+                document.getElementById("live_button").style.color = "grey"
+                document.getElementById("live-icon").style.display = "none"
+            } else {
+                document.getElementById("live_button").style.color = "red"
+                document.getElementById("live-icon").style.display = "block"
+            }
+
+            fetch("/user/get_list", {
+                method: 'POST',
+                body: [date.toString(),flag]
+            })
+            .then(response => {
+                return response.text();
+            })
+            .then(html => {
+                lista.innerHTML = html;
+            })
+
+
+            /* const list = document.getElementsByClassName("fill-div")
+            console.log(list)
+            for(let i = 0; i < list.length; i++) {
+                document.getElementsByClassName("fill-div")[i].href = "sos"
+            }
+            console.log(document.getElementsByClassName("fill-div")) */
+        }
+
+        function changeLiveStyle(flag) {
+            console.log(flag);
+            if(flag == "True") 
+                document.getElementById("live_button").style.color = "red";
+            else
+                document.getElementById("live_button").style.color = "white";
+        }
+
+        function byOneDay(dir) {
+            date = document.getElementById("datetime_picker").value;
+            console.log("metto falso")
+            flag = 'False'
+            changeLiveStyle(flag) 
+
+            date2 = new Date(date)
+            date2.setDate(date2.getDate() + dir);
+            
+            
+            formatDate = date2.getFullYear() + "-" + (date2.getMonth()+1).toString().padStart(2, '0') + "-" + date2.getDate().toString().padStart(2, '0') + "T" + date2.getHours().toString().padStart(2, '0') + ":" + date2.getMinutes().toString().padStart(2, '0');
+            
+            document.getElementById("datetime_picker").value = formatDate.toString();
+
+            console.log(formatDate)
+
+            update_list(formatDate)
+        }
+
+        function change() {
+            date = document.getElementById("datetime_picker").value;
+            console.log("metto falso")
+            
+            flag = 'False'
+            changeLiveStyle(flag) 
+
+            update_list(date)
+        }
+
+        let flag = $('#my-data').data().name;
+        changeLiveStyle(flag) 
+
+        setInterval(function(){
+            const formatDate = (date) => {
+                return date.getFullYear() + "-" + (date.getMonth()+1).toString().padStart(2, '0') + "-" + date.getDate().toString().padStart(2, '0') + "T" + date.getHours().toString().padStart(2, '0') + ":" + date.getMinutes().toString().padStart(2, '0');
+            }
+
+            let date = new Date();
+            date2 = formatDate(date)
+
+            if (flag == "True") {
+                document.getElementById("datetime_picker").value = date2.toString();
+                update_list(date2)
+            }
+        },5000);
+    </script>
+
+
+
+    <script>
+        let touchstartX = 0
+        let touchendX = 0
+        let touchstartY = 0
+        let touchendY = 0
+            
+
+
+        function checkDirection() {
+            deltaY = Math.abs(touchstartY - touchendY)
+            deltaX = Math.abs(touchstartX - touchendX)
+            if (touchendX < touchstartX && deltaY < 100 && deltaX > 120) {
+                byOneDay(1);
+            }
+            if (touchendX > touchstartX && deltaY < 100 && deltaX > 120) {
+                byOneDay(-1);
+            }
+        }
+
+        document.getElementById("lista").addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX
+            touchstartY = e.changedTouches[0].screenY
+        })
+
+        document.getElementById("lista").addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX
+            touchendY = e.changedTouches[0].screenY
+            checkDirection()
+        })
+        
+    </script>
 
 {% endblock %}

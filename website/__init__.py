@@ -20,7 +20,6 @@ def create_app():
 
     app.register_blueprint(auth, url_prefix='/auth')
     app.register_blueprint(user, url_prefix='/user')
-    #app.register_blueprint(util, url_prefix='/util')
 
     from .models import User
 
@@ -42,3 +41,4 @@ def create_database(app):
     if not path.exists('website/' + DB_NAME):
         db.create_all(app=app)
         print('Created Database!')
+

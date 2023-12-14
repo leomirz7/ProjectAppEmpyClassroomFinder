@@ -23,6 +23,9 @@ date_format = "%Y-%m-%d"
 with open(os.path.join(dirname, "DB/lezioni.json"), "r") as read_file:
     lessons = json.load(read_file)
 
+with open(os.path.join("/home/mirza/ProjectAppEmpyClassroomFinder/DB/insegnamenti.json"), "r") as read_file:
+    insegnamenti = json.load(read_file)
+
     lessons.sort(key=lambda item:item['INIZIO'])
     lessons.sort(key=lambda item:item['AULA_ID'])
     lessons.sort(key=lambda item:item['GIORNO'])
@@ -34,8 +37,14 @@ with open(os.path.join(dirname, "DB/lezioni.json"), "r") as read_file:
         if les["AULA_ID"] in aule_IDs:
             if les["AULA_ID"] not in calendar[les['GIORNO']]:
                 calendar[les['GIORNO']][les["AULA_ID"]] = []
-                
-            calendar[les['GIORNO']][les["AULA_ID"]].append((les["INIZIO"], les["FINE"]))
+        
+
+            for insegnamento in insegnamenti:
+                if insegnamento["AR_ID"] == les['AR_ID']:
+                    nome_lezione = insegnamento["NOME"]
+                    break
+
+            calendar[les['GIORNO']][les["AULA_ID"]].append((les["INIZIO"], les["FINE"], nome_lezione))
 
     now = datetime.datetime.now()
     current_time = now.strftime("%H:%M")
@@ -47,7 +56,7 @@ with open(os.path.join(dirname, "DB/lezioni.json"), "r") as read_file:
     
     for a in calendar[today]:
         occupata = False
-        for i,f in calendar[today][a]:
+        for i,f, n in calendar[today][a]:
             inizio = datetime.datetime.strptime(i,'%H:%M')
             fine = datetime.datetime.strptime(f,'%H:%M')
             

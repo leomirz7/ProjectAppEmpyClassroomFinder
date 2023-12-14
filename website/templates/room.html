@@ -1,0 +1,60 @@
+{% extends "base.html" %} 
+
+
+
+{% block header_title %}
+        
+    {{title}}
+    
+{% endblock %}
+
+
+{% block title %}
+    {{title}}
+{% endblock %} 
+
+
+<div id="room_el">
+    <div id="room_name">
+        {{a}} - {{e}}
+    </div>
+    <div id="room_info">
+        {{s}}
+    </div>
+</div>
+
+{% block content %}
+
+    
+        {% for a, b, c  in cal %}
+    
+            <div id="room_el">
+                <div id="room_name">
+                    {{c}}
+                </div>
+                <div id="room_info">
+                    {{a}} - {{b}}
+                </div>
+            </div>
+
+        {% endfor %}
+        <br><br>
+
+        <meta id="my-flag" data-name="{{flag}}">
+        <meta id="my-date" data-name="{{date}}">
+
+    <script>
+        window.onload = (event) => {
+            console.log("sis")
+            let date = $('#my-date').data().name;
+            let flag = $('#my-flag').data().name;
+        
+            document.getElementById("footer_list_button_link").href = "/user?date=" + date.toString() + "&flag=" + flag
+            document.getElementById("footer_map_button_link").href = "/user/map?date=" + date.toString() + "&flag=" + flag
+        }
+    
+    </script>
+
+{% endblock %}
+
+

@@ -1,0 +1,17 @@
+{% if cal|length > 0 %}
+    {% for a, s, e, id  in cal %}
+        
+        <a href="{{url_for('user.room', room_name = a, flag=flag, room_id=id, date=today)}}" class="fill-div">
+            <div id="room_el">
+                <div id="room_name">
+                    {{a}} - {{e}}
+                </div>
+                <div id="room_info">
+                    {{s}}
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+{% else %}
+    <p> Non ci sono aule libere disponibili</p>
+{% endif %}

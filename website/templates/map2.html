@@ -1,45 +1,209 @@
 {% extends "base.html" %} 
 
-    {% block title %}
-        {{title}}
-    {% endblock %} 
+{% block header_title %}
+    {{title}}
+{% endblock %}
 
-    {% block header_title %}
-        {{title}}
-    {% endblock %} 
 
-    {% block content %}
+{% block title %}
+    {{title}}
+{% endblock %} 
 
-            <script src="{{url_for('static', filename='script.js')}}"></script>
-            <div id="map-container">
-                <div id="locations-panel">
-                    <div id="locations-panel-list">
-                        <header>
-                            <h1 class="search-title">
-                                <img src="https://fonts.gstatic.com/s/i/googlematerialicons/place/v15/24px.svg" alt=""/>
-                                Find a location near you
-                            </h1>
-                            <div class="search-input">
-                                <input id="location-search-input" placeholder="Enter your address or zip code">
-                                <div id="search-overlay-search" class="search-input-overlay search">
-                                    <button id="location-search-button">
-                                        <img class="icon" src="https://fonts.gstatic.com/s/i/googlematerialicons/search/v11/24px.svg" alt="Search"/>
-                                    </button>
-                                </div>
-                            </div>
-                        </header>
-                        <div class="section-name" id="location-results-section-name">
-                            All locations
-                        </div>
-                        <div class="results">
-                            <ul id="location-results-list"> </ul>
-                        </div>
-                    </div>
-                </div>
-                <div id="gmp-map">
+{% block content %}
+    <meta id="my-data" data-name="{{live}}">
 
-                </div>
-            </div>
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbfyIpvNetPbX4UGtv6ddVjprg4cMA9vo&callback=initMap&libraries=places,geometry&solution_channel=GMP_QB_locatorplus_v7_cABD" async defer></script>
 
-    {% endblock %}
+    <div id="data">
+        <div  id="date_picker_form">
+            <button onclick="byOneDay(-1)" name="previous" id="previous" > &lt; </button>
+            <input onchange="change()" type="datetime-local" name="date_time" value={{today}} id="datetime_picker">
+            <a id="live_button" onclick="goLive()">
+                    <span>Live</span>
+                    <span id="live-icon"></span>
+            </a>
+            <button onclick="byOneDay(1)" name="next" id="next"> &gt; </button>
+
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+
+    <div id="map_list">
+        <div id="map_list_header"> Header </div>
+        <div id="map_list_content"> </div>
+    </div>
+    
+
+
+    <script>
+        
+        var map = L.map('map').setView([45.47869004701242, 12.255267248939692], 17);
+
+        
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        layer = L.geoJSON().addTo(map)
+
+    </script>
+
+
+    <script>
+
+        function goLive() {
+
+            const formatDate = (date) => {
+                return date.getFullYear() + "-" + (date.getMonth()+1).toString().padStart(2, '0') + "-" + date.getDate().toString().padStart(2, '0') + "T" + date.getHours().toString().padStart(2, '0') + ":" + date.getMinutes().toString().padStart(2, '0');
+            }
+
+            flag = "True"
+            changeLiveStyle(flag) 
+            let date = new Date();
+            date2 = formatDate(date)
+            document.getElementById("datetime_picker").value = date2.toString();
+            update_map(date2)
+        
+        }
+
+        window.onload = (event) => {
+            update_map(document.getElementById("datetime_picker").value)
+            document.getElementById("map_icon").style.setProperty('font-variation-settings', `'FILL' 1, 'wght' 200, 'GRAD' -25, 'opsz' 20`);
+            document.getElementById("list_icon").style.setProperty('font-variation-settings', `'FILL' 0, 'wght' 200, 'GRAD' -25, 'opsz' 20`);
+        };
+
+        function markerOnClick(e) {
+
+            date = document.getElementById("datetime_picker").value
+
+            document.getElementById("map_list_header").innerText  = e.layer.feature.properties.name
+
+            array = [e.layer.feature.properties.name, date.toString()]
+
+            fetch("/user/get_list_edificio", {
+                method: 'POST',
+                body: array
+            })
+            .then(response => {
+                return response.text();
+            })
+            .then(html => {
+                map_list_content.innerHTML = html;
+            })
+            open_list()
+        }
+
+        function update_map(date) {
+            
+
+            if(flag == "False") {
+                document.getElementById("live_button").style.color = "grey"
+                document.getElementById("live-icon").style.display = "none"
+            } else {
+                document.getElementById("live_button").style.color = "red"
+                document.getElementById("live-icon").style.display = "block"
+            }
+
+
+
+            document.getElementById("footer_list_button_link").href = "/user?date=" + date.toString() + "&flag=" + flag
+            
+            fetch("/user/get_geo", {
+                method: 'POST',
+                body: date
+            })
+            .then(response => {
+                
+                return response.json();
+            })
+            .then(response => {
+                var geojsonFeature2 = {
+                    "type": "FeatureCollection",
+                    "features": [
+                        
+                    ]
+                };
+
+                for(a in response)
+                    geojsonFeature2["features"].push(response[a])
+
+                layer.removeFrom(map)
+                
+                layer = L.geoJSON(geojsonFeature2).on('click', markerOnClick).addTo(map)
+
+                map.on('click', function(e) {        
+                    document.getElementById("map_list").style.bottom = "-50vh";
+                });
+
+            })
+        }
+
+        function changeLiveStyle(flag) {
+            if(flag == "True") 
+                document.getElementById("live_button").style.color = "red";
+            else
+                document.getElementById("live_button").style.color = "white ";
+        }
+
+        function byOneDay(dir) {
+            date = document.getElementById("datetime_picker").value;
+            document.getElementById("map_list").style.bottom = "-50vh";
+            flag = 'False'
+            changeLiveStyle(flag) 
+
+            date2 = new Date(date)
+            date2.setDate(date2.getDate() + dir);
+            
+            
+            formatDate = date2.getFullYear() + "-" + (date2.getMonth()+1).toString().padStart(2, '0') + "-" + date2.getDate().toString().padStart(2, '0') + "T" + date2.getHours().toString().padStart(2, '0') + ":" + date2.getMinutes().toString().padStart(2, '0');
+            
+            document.getElementById("datetime_picker").value = formatDate.toString();
+
+            console.log(formatDate)
+
+            update_map(formatDate)
+        }
+
+        function change() {
+            date = document.getElementById("datetime_picker").value;
+            
+            flag = 'False'
+            changeLiveStyle(flag) 
+
+            update_map(date)
+        }
+
+        let flag = $('#my-data').data().name;
+        changeLiveStyle(flag) 
+
+        setInterval(function(){
+            const formatDate = (date) => {
+                return date.getFullYear() + "-" + (date.getMonth()+1).toString().padStart(2, '0') + "-" + date.getDate().toString().padStart(2, '0') + "T" + date.getHours().toString().padStart(2, '0') + ":" + date.getMinutes().toString().padStart(2, '0');
+            }
+
+            let date = new Date();
+            date2 = formatDate(date)
+
+            if (flag == "True") {
+                document.getElementById("datetime_picker").value = date2.toString();
+                update_map(date2)
+            }
+        },5000);
+
+
+        function open_list() {
+            document.getElementById("map_list").style.bottom = "8.5vh";
+
+        }
+
+        function close_list() {
+            /* document.getElementById("map_list").style.bottom = "0vh"; */
+        }
+
+    </script>
+
+
+{% endblock %}
