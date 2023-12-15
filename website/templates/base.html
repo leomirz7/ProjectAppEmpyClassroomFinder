@@ -77,6 +77,8 @@
               document.getElementById("layer").style.visibility = "hidden";
               
             }
+
+            
         </script>
 
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
@@ -93,6 +95,24 @@
 
 
     </body>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %} {% if category ==
+        'error' %}
+            <div class="alert alert-danger alter-dismissable fade show" role="alert">
+                {{ message }}
+                <button id="alert" type="button" class="close" data-dismiss="alert">
+                <div aria-hidden="true">&times;</div>
+                </button>
+            </div>
+        {% else %}
+            <div class="alert alert-success alter-dismissable fade show" role="alert">
+                {{ message }}
+                <button id="alert" type="button" class="close" data-dismiss="alert">
+                <div aria-hidden="true">&times;</div>
+                </button>
+            </div>
+        {% endif %} {% endfor %} {% endif %} {% endwith %}
     
     
     {% if user.is_authenticated %}
@@ -149,23 +169,6 @@
     </div>
     
 
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %} {% for category, message in messages %} {% if category ==
-    'error' %}
-        <div class="alert alert-danger alter-dismissable fade show" role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert">
-            <div aria-hidden="true">&times;</div>
-            </button>
-        </div>
-    {% else %}
-        <div class="alert alert-success alter-dismissable fade show" role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert">
-            <div aria-hidden="true">&times;</div>
-            </button>
-        </div>
-    {% endif %} {% endfor %} {% endif %} {% endwith %}
-
+   
 
 </html>

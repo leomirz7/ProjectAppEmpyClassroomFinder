@@ -97,7 +97,7 @@
     background-color: white;
     border-radius: 4vw;
     overflow: auto;
-    max-height: 35vh;
+    max-height: 37vh;
     display: flex;
     flex-direction: column;
     transition: 0.6s;
@@ -227,9 +227,6 @@
     overflow: hidden;
 }
 
-.alert {
-    position: fixed;
-}
 
 #profile_content {
     display: flex;
@@ -380,3 +377,10 @@ a.fill-div {
     top: 47%;
     font-size: large;
   }
+
+.alert {
+    
+    width: 80vw;
+    margin: auto;
+    margin-top: 20%;
+}

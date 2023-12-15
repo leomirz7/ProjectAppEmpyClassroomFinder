@@ -47,6 +47,11 @@
         }
 
         window.onload = (event) => {     
+            const myTimeout = setTimeout(closeAlert, 3000);
+            function closeAlert() {
+                document.getElementById("alert").click();
+
+            }
             update_list(document.getElementById("datetime_picker").value)
             document.getElementById("map_icon").style.setProperty('font-variation-settings', `'FILL' 0, 'wght' 200, 'GRAD' -25, 'opsz' 20`);
             document.getElementById("list_icon").style.setProperty('font-variation-settings', `'FILL' 1, 'wght' 200, 'GRAD' -25, 'opsz' 20`);
@@ -55,12 +60,15 @@
         function update_list(date) {
             document.getElementById("footer_map_button_link").href = "/user/map?date=" + date.toString() + "&flag=" + flag
             console.log(flag)
+
             if(flag == "False") {
-                document.getElementById("live_button").style.color = "grey"
+                document.getElementById("live_button").style.color = "#bbbbbb"
+                document.getElementById("live_button").style.textDecoration = "underline"
                 document.getElementById("live-icon").style.display = "none"
             } else {
                 document.getElementById("live_button").style.color = "red"
                 document.getElementById("live-icon").style.display = "block"
+                document.getElementById("live_button").style.textDecoration = "none"
             }
 
             fetch("/user/get_list", {
@@ -85,10 +93,11 @@
 
         function changeLiveStyle(flag) {
             console.log(flag);
-            if(flag == "True") 
-                document.getElementById("live_button").style.color = "red";
-            else
-                document.getElementById("live_button").style.color = "white";
+            if(flag == "False") {
+                document.getElementById("live_button").style.color = "#bbbbbb"
+            } else {
+                document.getElementById("live_button").style.color = "red"
+            }
         }
 
         function byOneDay(dir) {

@@ -51,7 +51,7 @@
     <script>
 
         function goLive() {
-
+            document.getElementById("map_list").style.bottom = "-50vh";
             const formatDate = (date) => {
                 return date.getFullYear() + "-" + (date.getMonth()+1).toString().padStart(2, '0') + "-" + date.getDate().toString().padStart(2, '0') + "T" + date.getHours().toString().padStart(2, '0') + ":" + date.getMinutes().toString().padStart(2, '0');
             }
@@ -94,13 +94,15 @@
 
         function update_map(date) {
             
-
+            
             if(flag == "False") {
-                document.getElementById("live_button").style.color = "grey"
+                document.getElementById("live_button").style.color = "#bbbbbb"
+                document.getElementById("live_button").style.textDecoration = "underline"
                 document.getElementById("live-icon").style.display = "none"
             } else {
                 document.getElementById("live_button").style.color = "red"
                 document.getElementById("live-icon").style.display = "block"
+                document.getElementById("live_button").style.textDecoration = "none"
             }
 
             document.getElementById("footer_list_button_link").href = "/user?date=" + date.toString() + "&flag=" + flag
