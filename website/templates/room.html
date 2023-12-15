@@ -1,18 +1,13 @@
 {% extends "base.html" %} 
 
-
-
 {% block header_title %}
-        
     {{title}}
-    
 {% endblock %}
 
 
 {% block title %}
     {{title}}
 {% endblock %} 
-
 
 <div id="room_el">
     <div id="room_name">
@@ -25,7 +20,6 @@
 
 {% block content %}
 
-    
         {% for a, b, c  in cal %}
     
             <div id="room_el">
@@ -56,5 +50,3 @@
     </script>
 
 {% endblock %}
-
-

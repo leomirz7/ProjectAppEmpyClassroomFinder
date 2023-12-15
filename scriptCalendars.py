@@ -38,7 +38,6 @@ with open(os.path.join("/home/mirza/ProjectAppEmpyClassroomFinder/DB/insegnament
             if les["AULA_ID"] not in calendar[les['GIORNO']]:
                 calendar[les['GIORNO']][les["AULA_ID"]] = []
         
-
             for insegnamento in insegnamenti:
                 if insegnamento["AR_ID"] == les['AR_ID']:
                     nome_lezione = insegnamento["NOME"]

@@ -372,3 +372,11 @@ a.fill-div {
       background-color: rgba(red, 0);
     }
   }
+
+  #no_rooms_message {
+    margin: auto;
+    text-align: center;
+    position: relative;
+    top: 47%;
+    font-size: large;
+  }

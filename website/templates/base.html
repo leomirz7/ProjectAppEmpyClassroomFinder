@@ -79,18 +79,11 @@
             }
         </script>
 
-        
-
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/handlebars/4.7.7/handlebars.min.js"></script>
-        
-    
     
         <link rel="stylesheet" type="text/css" href= "{{url_for('static',filename='style.css') }}"  />
             
-        
-
-
         <title>{% block title %} {% endblock %}</title>
     </head>
     <body>
@@ -123,8 +116,6 @@
     </div>
     {% endif %} 
 
-    
-
     <div id="header">
         <div class="w3-sidebar w3-bar-block w3-border-right" id="mySidebar">
             
@@ -156,7 +147,6 @@
         </div>
         <div id="layer" onclick="w3_close()"></div>
     </div>
-
     
 
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
@@ -177,6 +167,5 @@
         </div>
     {% endif %} {% endfor %} {% endif %} {% endwith %}
 
-    
 
 </html>

@@ -25,9 +25,7 @@
         </div>
     </div>
 
-    <div id="lista">
-    </div>
-    
+    <div id="lista"> </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     
@@ -48,8 +46,7 @@
           
         }
 
-        window.onload = (event) => {
-            
+        window.onload = (event) => {     
             update_list(document.getElementById("datetime_picker").value)
             document.getElementById("map_icon").style.setProperty('font-variation-settings', `'FILL' 0, 'wght' 200, 'GRAD' -25, 'opsz' 20`);
             document.getElementById("list_icon").style.setProperty('font-variation-settings', `'FILL' 1, 'wght' 200, 'GRAD' -25, 'opsz' 20`);
@@ -141,15 +138,11 @@
         },5000);
     </script>
 
-
-
     <script>
         let touchstartX = 0
         let touchendX = 0
         let touchstartY = 0
         let touchendY = 0
-            
-
 
         function checkDirection() {
             deltaY = Math.abs(touchstartY - touchendY)

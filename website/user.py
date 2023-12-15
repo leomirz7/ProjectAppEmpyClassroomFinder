@@ -5,7 +5,6 @@ import json
 import datetime
 import re
 
-
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import *
 
@@ -116,13 +115,10 @@ def get_list():
         dateString = date_out.date().strftime(date_format)
         dateStringHtml = date_out.strftime('%Y-%m-%dT%H:%M')
 
-
         if calendar.get(dateString):
-
             return render_template('lista_aule.html', user=current_user, today=dateStringHtml, flag=flag, cal=get_aule_oggi(date_out))
         else:
-
-            return "Non ci sono aule "
+            return "<p id='no_rooms_message'> No empty rooms available :( </p>"
 
 
 @user.route('/get_list_edificio', methods=['POST'])
@@ -141,11 +137,10 @@ def get_list_edificio():
             if nome_edifico in c:
                 cal_edificio.append((a,b,c,d))
             
-
         if calendar.get(dateString):
             return render_template('lista_aule.html', user=current_user, today=dateStringHtml, cal=cal_edificio)
         else:
-            return "Non ci sono aule libere"
+            return "<p id='no_rooms_message'> No empty rooms available :( </p>"
 
 
 @user.route('/get_geo', methods=['POST'])
@@ -176,7 +171,6 @@ def get_geo():
             return []
 
         
-
 @user.route('/map')
 @login_required
 def map():
